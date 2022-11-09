@@ -34,6 +34,121 @@ def reset():
 def close():  
     # using the destroy() method to close the application  
     guiWindow.destroy()
+
+def addEvent():
+    newGUI = Tk()
+    newGUI.title("Sündmus")
+    newGUI.geometry("500x200")
+    newGUI.resizable(0, 0)  
+    newGUI.config(bg="#B0E0E6")
+
+    header_frame = Frame(newGUI, bg = "#B0E0E6")  
+    entry_frame = Frame(newGUI, bg = "#B0E0E6") 
+    event_frame = Frame(newGUI, bg = "#B0E0E6")   
+    button_frame = Frame(newGUI, bg = "#B0E0E6")  
+  
+    header_frame.pack(expand = True, fill = "both")
+    entry_frame.pack(expand = True, fill = "both")  
+    event_frame.pack(expand = True, fill = "both")
+    button_frame.pack(expand = True, fill = "both")
+    
+    header_label = Label(  
+        header_frame,  
+        text = "Sündmus",  
+        font = ('verdana','25','bold'),  
+        bg = "#B0E0E6",  
+        fg = "#191970"  
+    )   
+    event_field = Text(  
+        event_frame,
+        width = 40,   
+        height = 2,  
+        font = ("consolas", "14"),  
+        relief = RIDGE,  
+        borderwidth = 2  
+    )
+    add_button = Button(
+        button_frame,
+        text = "LISA",
+        bg = "#191970",  
+        fg = "#E0FFFF",
+        command = add
+    )
+    day_label = Label(
+        entry_frame,
+        text = "Päev:",  
+        font = ("consolas", "10", "bold"),  
+        bg = "#B0E0E6",  
+        fg = "#000000"  
+    )
+    month_label = Label(  
+        entry_frame,  
+        text = "Kuu:",  
+        font = ("consolas", "10", "bold"),  
+        bg = "#B0E0E6",  
+        fg = "#000000"  
+    )  
+    year_label = Label(  
+        entry_frame,  
+        text = "Aasta:",  
+        font = ("consolas", "10", "bold"),  
+        bg = "#B0E0E6",  
+        fg = "#000000"     
+    )  
+    # using the place() method to set the position of the labels
+    day_label.place(x = 70, y = 0)
+    month_label.place(x = 170, y = 0)  
+    year_label.place(x = 270, y = 0)
+
+    # creating the objects of the IntVar class
+    day_var = IntVar(entry_frame)
+    month_var = IntVar(entry_frame)  
+    year_var = IntVar(entry_frame)  
+      
+    # storing the current month and year information
+    current_day = date.today().day
+    current_month = date.today().month  
+    current_year = date.today().year  
+      
+    # setting the current month and year to the IntVar objects
+    day_var.set(current_day)
+    month_var.set(current_month)  
+    year_var.set(current_year)  
+      
+    # creating the spin boxes to enter month and year
+    day_box = Spinbox(
+        entry_frame,
+        from_ = 1,
+        to = 31,
+        width = "5",
+        textvariable = day_var
+    )
+    month_box = Spinbox(  
+        entry_frame,  
+        from_ = 1,  
+        to = 12,  
+        width = "5",  
+        textvariable = month_var   
+        )  
+    year_box = Spinbox(  
+        entry_frame,  
+        from_ = 0000,  
+        to = 3000,  
+        width = "5",  
+        textvariable = year_var  
+    )  
+    # using the place() method to set the position of the spin boxes  
+    day_box.place(x = 110, y = 0)
+    month_box.place(x = 210, y = 0)  
+    year_box.place(x = 320, y = 0)
+    add_button.place(x = 240, y = 00)
+    
+    event_field.pack(expand = False, fill = None)
+    header_label.pack(expand = True, fill = "both")
+    newGUI.mainloop()
+    
+def add():
+    return
     
     # main function  
 if __name__ == "__main__":  
@@ -51,14 +166,16 @@ if __name__ == "__main__":
     guiWindow.iconbitmap("icon_calendar.ico")  
     
     header_frame = Frame(guiWindow, bg = "#B0E0E6")  
-entry_frame = Frame(guiWindow, bg = "#B0E0E6")  
-result_frame = Frame(guiWindow, bg = "#B0E0E6")  
-button_frame = Frame(guiWindow, bg = "#B0E0E6")  
+    entry_frame = Frame(guiWindow, bg = "#B0E0E6")  
+    result_frame = Frame(guiWindow, bg = "#B0E0E6")
+    event_frame = Frame(guiWindow, bg = "#B0E0E6")
+    button_frame = Frame(guiWindow, bg = "#B0E0E6")  
   
 # using the pack() method to set the positions of the frames  
-header_frame.pack(expand = True, fill = "both")  
+header_frame.pack(expand = True, fill = "both")
 entry_frame.pack(expand = True, fill = "both")  
-result_frame.pack(expand = True, fill = "both")  
+result_frame.pack(expand = True, fill = "both")
+event_frame.pack(expand = True, fill = "both")
 button_frame.pack(expand = True, fill = "both")
 
 header_label = Label(  
@@ -83,14 +200,14 @@ image_label.pack(expand = True, fill = "both")
 
 month_label = Label(  
     entry_frame,  
-    text = "Month:",  
+    text = "Kuu:",  
     font = ("consolas", "10", "bold"),  
     bg = "#B0E0E6",  
     fg = "#000000"  
 )  
 year_label = Label(  
     entry_frame,  
-    text = "Year:",  
+    text = "Aasta:",  
     font = ("consolas", "10", "bold"),  
     bg = "#B0E0E6",  
     fg = "#000000"     
@@ -143,7 +260,7 @@ calendar_field.pack(expand = False, fill = None)
 
 display_button = Button(  
     button_frame,  
-    text = "DISPLAY",  
+    text = "NÄITA",  
     bg = "#191970",  
     fg = "#E0FFFF",  
     command = displayCalendar  
@@ -152,7 +269,7 @@ display_button = Button(
 # RESET BUTTON  
 reset_button = Button(  
     button_frame,  
-    text = "RESET",  
+    text = "TAASTA",  
     bg = "#191970",  
     fg = "#E0FFFF",  
     command = reset  
@@ -161,15 +278,24 @@ reset_button = Button(
 # CLOSE BUTTON  
 close_button = Button(  
     button_frame,  
-    text = "CLOSE",  
+    text = "SULGE",  
     bg = "#191970",  
     fg = "#E0FFFF",  
     command = close  
 )  
-  
+
+event_button = Button(
+    button_frame,
+    text = "LISA SÜNDMUS",
+    bg = "#191970",  
+    fg = "#E0FFFF",
+    command = addEvent
+)
+
 # using the place() method to set the positions of the buttons  
-display_button.place(x = 140, y = 0)  
+display_button.place(x = 165, y = 0)  
 reset_button.place(x = 230, y = 0)  
 close_button.place(x = 305, y = 0)
+event_button.place(x = 210, y = 30)
 
 guiWindow.mainloop()  
